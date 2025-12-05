@@ -28,14 +28,17 @@ class Mercury230SensorBase {
     request_ = req;
 
     char *p = strchr(req, '(');
+	char *e = strchr(req, ')');
     if (p != nullptr) {
       size_t len = p - req;
+	  size_t lenp = e - p;
       function_.assign(req, len);
+	  param_.assign(req, (len + 1), lenp - 1);
     }
   };
   const std::string &get_request() const { return request_; }
   const std::string &get_function() const { return function_; }
-
+  const std::string &get_param() const { return param_; }
   void set_index(const uint8_t idx) { idx_ = idx; };
   uint8_t get_index() const { return idx_; };
   
@@ -61,6 +64,7 @@ class Mercury230SensorBase {
  protected:
   std::string request_;
   std::string function_;
+  std::string param_;
   uint8_t idx_{1};
   uint8_t sub_idx_{0};
   bool has_value_;

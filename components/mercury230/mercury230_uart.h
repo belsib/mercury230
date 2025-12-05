@@ -7,7 +7,7 @@
 #endif
 
 #ifdef USE_ESP32_FRAMEWORK_ARDUINO
-#include "esphome/components/uart/uart_component_esp32_arduino.h"
+#include "esphome/components/uart/uart_component.h"
 #include <HardwareSerial.h>
 #endif
 
@@ -29,9 +29,9 @@ static const uint32_t TIMEOUT = 20;  // default value in uart implementation is 
 
 #ifdef USE_ESP32_FRAMEWORK_ARDUINO
 
-class Mercury230Uart final : public uart::ESP32ArduinoUARTComponent {
+class Mercury230Uart final : public uart::UARTComponent {
  public:
-  Mercury230Uart(uart::ESP32ArduinoUARTComponent const &uart)
+  Mercury230Uart(uart::UARTComponent const &uart)
       : uart_(uart), hw_(uart.*(&Mercury230Uart::hw_serial_)) {}
 
   // Reconfigure baudrate
@@ -69,7 +69,7 @@ class Mercury230Uart final : public uart::ESP32ArduinoUARTComponent {
     return true;
   }
 
-  uart::ESP32ArduinoUARTComponent const &uart_;
+  uart::UARTComponent const &uart_;
   HardwareSerial *const hw_;
 };
 #endif
